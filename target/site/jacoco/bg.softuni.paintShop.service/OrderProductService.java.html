@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="bg"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderProductService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PersonalProject</a> &gt; <a href="index.source.html" class="el_package">bg.softuni.paintShop.service</a> &gt; <span class="el_source">OrderProductService.java</span></div><h1>OrderProductService.java</h1><pre class="source lang-java linenums">package bg.softuni.paintShop.service;
+
+import bg.softuni.paintShop.exception.ObjectNotFoundException;
+import bg.softuni.paintShop.model.entity.OrderEntity;
+import bg.softuni.paintShop.model.entity.OrderProductEntity;
+import bg.softuni.paintShop.model.entity.ProductEntity;
+import bg.softuni.paintShop.repository.OrderProductRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+<span class="fc" id="L15">@RequiredArgsConstructor</span>
+@Service
+@Transactional
+public class OrderProductService {
+
+    private final OrderProductRepository orderProductRepository;
+
+    public void addOrderAndProduct(OrderEntity order, ProductEntity product, Integer quantity) {
+
+<span class="fc" id="L24">        OrderProductEntity orderProductEntity = new OrderProductEntity();</span>
+<span class="fc" id="L25">        orderProductEntity.setOrder(order);</span>
+<span class="fc" id="L26">        orderProductEntity.setProduct(product);</span>
+<span class="fc" id="L27">        orderProductEntity.setQuantity(quantity);</span>
+<span class="fc" id="L28">        orderProductRepository.save(orderProductEntity);</span>
+<span class="fc" id="L29">    }</span>
+
+
+    public List&lt;OrderProductEntity&gt; findAllUsersProducts(Long id) {
+<span class="fc" id="L33">        return orderProductRepository.findAllOrdersByUserId(id).orElseThrow(ObjectNotFoundException::new);</span>
+    }
+
+    public List&lt;OrderProductEntity&gt; findAll() {
+<span class="fc" id="L37">        return orderProductRepository.findAll();</span>
+    }
+
+    public List&lt;OrderProductEntity&gt; findAllOrderProducts(Long orderId) {
+<span class="fc" id="L41">        return orderProductRepository.findOrderProductEntitiesByOrder_Id(orderId).orElseThrow(ObjectNotFoundException::new);</span>
+    }
+
+    //Usage in template
+    public BigDecimal pricePerProduct(OrderProductEntity orderProductEntity) {
+<span class="fc" id="L46">        return orderProductEntity.getProduct().getPrice().multiply(BigDecimal.valueOf(orderProductEntity.getQuantity()));</span>
+    }
+
+    public BigDecimal findTurnover() {
+<span class="pc bnc" id="L50" title="All 2 branches missed.">        return orderProductRepository.findAll().stream().filter(orderProductEntity -&gt; orderProductEntity.getOrder().getUser().getId() != 1).</span>
+<span class="pc bnc" id="L51" title="All 2 branches missed.">                filter(orderProductEntity -&gt; !orderProductEntity.getOrder().isDeleted()).</span>
+<span class="pc" id="L52">                map(orderProductEntity -&gt; orderProductEntity.getProduct().getPrice().multiply(BigDecimal.valueOf(orderProductEntity.getQuantity())))</span>
+<span class="fc" id="L53">                .reduce(BigDecimal::add)</span>
+<span class="fc" id="L54">                .orElse(BigDecimal.ZERO);</span>
+    }
+
+    public void removeAllProductOfOrderById(Long id) {
+<span class="fc" id="L58">        orderProductRepository.deleteAllOrdersProductEntitiesByOrderId(id);</span>
+<span class="fc" id="L59">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+<div class="container-fluid" style="overflow: auto">
+    <table id="AdminCategories" class="table table-responsive table-hover  text-dark rounded"
+           style="overflow-x:scroll; background-color: rgba(255,255,255,0.5)">
+        <thead>
+
+        <h1 class="display-4 text-white">ALL CATEGORIES</h1>
+        <tr scope="row" class="bg-transparent">
+            <th scope="col">CategoryName</th>
+            <th scope="col"></th>
+            <th scope="col">ImageURl</th>
+            <th scope="col"><a class="card-link text-white bg-success" href="/admin">Back to Admin panel</a></th>
+        </tr>
+        </thead>
+
+        <tbody class="table">
+        <tr scope="row" th:each="cat: ${categories}" style="background-color: rgba(255,255,255,0.5)">
+            <td th:text="${cat.name}"></td>
+            <td>
+                <a class="photo"
+                   target="_blank">
+                    <img class="rounded" th:src="${cat.imageUrl}" alt="" style="width:60px ; height: 60px;">
+                </a>
+            </td>
+            <td th:text="${cat.imageUrl}">Category Name
+            </td>
+            <td><a th:href="@{/admin/categories/edit/{id}(id=${cat.id})}" class="text-primary rounded">Edit category</a>
+            </td>
+            <td><a th:href="@{/admin/categories/delete/{id}(id=${cat.id})}" class="text-danger rounded">Delete
+                category</a></td>
+        </tr>
+
+        </tbody>
+        <tr>
+            <th scope="col">
+                <a lass="card-link text-white bg-success rounded" href="/admin/categories/add">Add New Category</a>
+            </th>
+        </tr>
+
+    </table>
+</div>
+
+
+<footer th:replace="fragments/commons::footer"></footer>
+
+
+</body>
+
+</html>

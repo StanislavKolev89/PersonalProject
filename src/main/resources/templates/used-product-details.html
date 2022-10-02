@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<script src="/js/comments.js" defer></script>
+<script src="/js/itemChecker.js" defer></script>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+
+<div class="p-5 bg-blur text-center my-main">
+
+    <form th:action="@{/used/products/details/{id}(id=${productViewModel.id})}" th:method="post"
+          th:object="${usedProductDTO}">
+        <div class="card">
+            <h2 th:if="${principalUsername!=productViewModel.user}" class="mt-5">Used Product Details </h2>
+            <h2 th:if="${principalUsername==productViewModel.user}" class="mt-5">YOU CAN EDIT YOUR PRODUCT DETAILS </h2>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-6">
+                        <div class="white-box text-center"><img th:src="${productViewModel.imageUrl}"
+                                                                class="img-fluid"></div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-6">
+                        <div class="form-group">
+                            <H5>TITLE</H5>
+                            <input th:field="*{title}"
+                                   id="title" type="text" name="name" class="form-control"
+                                   th:placeholder="${productViewModel.title}"
+                                   th:disabled="${principalUsername!=productViewModel.user}">
+                            <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                                   id="imageError" class="text-light form-text bg-danger rounded">Length must
+                                between 3
+                                and 20 characters</small>
+                        </div>
+                        <div class="form-group">
+                            <H5>DESCRIPTION</H5>
+                            <input th:field="*{description}"
+                                   id="description" type="text" class="form-control"
+                                   th:placeholder="${productViewModel.description}"
+                                   th:disabled="${principalUsername!=productViewModel.user}">
+                            <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                                   id="imageError" class="text-light form-text bg-danger rounded">Length must
+                                between 3
+                                and 20 characters</small>
+                        </div>
+                        <div class="form-group">
+                            <H5>PRICE</H5>
+                            <input th:field="*{price}"
+                                   id="price" type="text" class="form-control"
+                                   th:placeholder="${productViewModel.price}"
+                                   th:disabled="${principalUsername!=productViewModel.user}">
+                            <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                                   id="imageError" class="text-light form-text bg-danger rounded">Length must
+                                between 3
+                                and 20 characters</small>
+                        </div>
+                        <div class="form-group">
+                            <H5>CATEGORY</H5>
+                            <input th:field="*{category}"
+                                   id="category" type="text" class="form-control"
+                                   th:placeholder="${productViewModel.category}"
+                                   th:disabled="${principalUsername!=productViewModel.user}">
+                            <small th:if="${#fields.hasErrors('price')}" th:errors="*{category}"
+                                   id="imageError" class="text-light form-text bg-danger rounded"></small>
+                        </div>
+                        <div class="form-group" th:if="${principalUsername==productViewModel.user}">
+                            <div  class="form-group">
+                                <H5>IMAGE URL</H5>
+                                <input th:field="*{imageUrl}"
+                                       id="description" type="text" class="form-control"
+                                       th:placeholder="${productViewModel.imageUrl}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <H5>PHONE NUMBER</H5>
+                            <input th:field="*{phoneNumber}"
+                                   id="phoneNumber" type="text" class="form-control"
+                                   th:placeholder="${productViewModel.phoneNumber}"
+                                   th:disabled="${principalUsername!=productViewModel.user}">
+                            <small th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                                   id="imageError" class="text-light form-text bg-danger rounded">Length must
+                                between 3
+                                and 20 characters</small>
+                        </div>
+                        <div class="form-group">
+                            <H5>USERNAME</H5>
+                            <input th:field="*{user}"
+                                   id="user" type="text" class="form-control"
+                                   th:placeholder="${productViewModel.user}"
+                                   th:disabled="${principalUsername!=productViewModel.user}">
+                            <small th:if="${#fields.hasErrors('user')}" th:errors="*{user}"
+                                   id="imageError" class="text-light form-text bg-danger rounded"></small>
+                        </div>
+
+                    </div>
+                </div>
+                <button th:if="${principalUsername==productViewModel.user}" type="submit"
+                        id="changeProduct" class="btn btn-info center-block btn-rounded" data-toggle="tooltip" title=""
+                        data-original-title="Add to cart">Edit Product
+                </button>
+            </div>
+
+            <p th:if="${principalUsername==productViewModel.user or adminIsLogged==1}">
+                <a class="btn btn-danger btn-rounded mr-1"
+                   th:href="@{/used/products/delete/{id}(id=${productViewModel.id})}">Delete</a></p>
+            <p><a class="btn btn-success center-block btn-rounded mr-1" href="/used/products/forSale">Go back</a></p>
+        </div>
+
+    </form>
+</div>
+</form>
+
+</div>
+
+</body>
+</html>

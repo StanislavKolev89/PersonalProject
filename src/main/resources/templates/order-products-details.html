@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="p-5 bg-blur text-center my-main">
+
+    <table class="table table-responsive table-hover  text-dark rounded"
+           style="overflow-x:scroll;background-color: rgba(255,255,255,0.5)">
+
+
+        <h1 class="display-4 text-white">ORDER DETAILS</h1>
+        <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Product</th>
+            <th scope="col">Description</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total</th>
+        </tr>
+
+        <tbody class="table">
+        <tr scope="row" th:each="item: ${allProductsInOrder}" style=" background-color: rgba(255,255,255,0.5)">
+            <td th:text="${item.product.title}"></td>
+            <td>
+                <a class="photo"
+                   target="_blank">
+                    <img th:src="${item.product.imageUrl}" alt="" style="width:60px ; height: 60px;">
+                </a>
+            </td>
+            <td th:text="${item.product.description}">Filler 2.5l
+            </td>
+            <td th:text="${item.quantity}">3
+            </td>
+            <td th:text="|${item.product.price} $|">22.45 $
+            </td>
+            <td th:text="|${service.pricePerProduct(item)} $|">
+            </td>
+
+        </tr>
+        <tr style="background-color: rgba(255,255,255,0.5)">
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th scope="col"><a class="card-link text-white bg-info" href="/admin/orders/all">Back To Orders</a>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

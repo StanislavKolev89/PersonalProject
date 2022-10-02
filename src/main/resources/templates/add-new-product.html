@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="p-5 bg-blur text-center my-main">
+    <form th:action="@{/admin/products/add}" th:method="post"
+          th:object="${productDTO}">
+        <div class="card">
+            <h2 class="mt-5">CREATE NEW PRODUCT </h2>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-6">
+                        <div class="white-box text-center"><img th:src="@{/images/add-product.webp}"
+                                                                class="img-responsive"></div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-6">
+                        <div class="form-group">
+                            <H5>TITLE</H5>
+                            <input th:field="*{title}"
+                                   id="title" type="text" name="name" class="form-control"
+                                   placeholder="Title">
+                            <div class="col-auto">
+                                <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                                       id="titleError" class="text-light form-text bg-danger rounded"></small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <H5>DESCRIPTION</H5>
+                            <input th:field="*{description}"
+                                   id="description" type="text" name="name" class="form-control"
+                                   placeholder="Description">
+                            <div class="col-auto">
+                                <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                                       id="descriptionError" class="text-light form-text bg-danger rounded"></small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <H5>PRICE</H5>
+                            <input th:field="*{price}"
+                                   id="name" type="text" name="name" class="form-control"
+                                   placeholder="Price">
+                            <div class="col-auto">
+                                <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                                       id="priceError" class="text-light form-text bg-danger rounded"></small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <H5>IMAGE URL</H5>
+                            <input th:field="*{imageUrl}"
+                                   id="imageUrl" type="text" name="name" class="form-control"
+                                   placeholder="Image Url">
+                            <div class="col-auto">
+                                <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                                       id="imageError" class="text-light form-text bg-danger rounded"></small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <select th:field="*{category}" class="form-control" id="categoryOption">
+                                <option value="" selected>Select Category</option>
+                                <option th:each="c:${categories}"
+                                        th:value="${c.getName()}"
+                                        th:text="${c.getName()}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit"
+                    id="addToCart" class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title=""
+                    data-original-title="Add to cart">Add Product
+            </button>
+        </div>
+
+    </form>
+</div>
+<footer th:replace="fragments/commons::footer"></footer>
+
+</body>
+</html>ml>

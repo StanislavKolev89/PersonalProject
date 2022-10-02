@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/fragments/commons::head"></head>
+<body>
+
+<nav th:replace="/fragments/commons::nav" class="navbar">
+</nav>
+
+<main class="p-5 text-center my-main">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+
+        <div class="carousel-inner">
+            <div class="carousel-item active ">
+                <h1 th:if="${firstCategoryItem.deleted}" class="text-danger">NOT AVAILABLE</h1>
+                <div class="carousel-caption d-block d-md-block">
+                    <h5 class="text-dark" th:text="${firstCategoryItem.getName()}">First slide label</h5>
+
+                </div>
+                <a th:if="${!firstCategoryItem.deleted}" class="photo"
+                   th:href="@{/products/{category}(category=${firstCategoryItem.getName()})}"
+                   target="_blank">
+                    <img class="d-block w-400"
+                         th:src="${firstCategoryItem.imageUrl}" alt="...">
+                </a>
+                <a th:if="${firstCategoryItem.deleted}" class="photo" target="_blank">
+                    <img style="opacity: 0.5;" class="d-block w-400"
+                         th:src="${firstCategoryItem.imageUrl}" alt="...">
+                </a>
+            </div>
+            <div th:each="category : ${allOtherItems}" class="carousel-item">
+                <h1 th:if="${category.deleted}" class="text-danger">NOT AVAILABLE</h1>
+                <div class="carousel-caption d-block d-md-block">
+                    <h5 class="text-dark" th:text="${category.name}">First slide label</h5>
+                </div>
+                <a th:if="${!category.deleted}" class="photo"
+                   th:href="@{/products/{category}(category=${category.getName()})}" target="_blank">
+                    <img class="d-block w-400" alt="..."
+                         th:src="${category.imageUrl}">
+                </a>
+                <a th:if="${category.deleted}" class="photo" target="_blank">
+                    <img style="opacity: 0.5;" class="d-block w-400" alt="..."
+                         th:src="${category.imageUrl}">
+                </a>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            <div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="/fragments/commons::footer"></footer>
+
+</body>
+</html>

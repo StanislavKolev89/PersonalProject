@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<script src="/js/comments.js" defer></script>
+<script src="/js/itemChecker.js" defer></script>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+
+<div class="p-5 bg-blur text-center my-main">
+    <form th:action="@{/used/products/add}" th:method="post"
+          th:object="${usedProductDTO}">
+        <div class="card">
+            <h2 class="mt-5">ADD YOUR USED PRODUCT</h2>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 col-md-5 col-sm-6">
+                        <div class="white-box text-center"><img th:src="@{/images/add-product.webp}"
+                                                                class="img-responsive"></div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-6">
+                        <div class="form-group">
+                            <H5>TITLE</H5>
+                            <input th:field="*{title}"
+                                   id="title" type="text" name="name" class="form-control"
+                                   placeholder="TITLE">
+                            <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                                   id="titleError" class="text-light form-text bg-danger rounded"></small>
+                        </div>
+                        <div class="form-group">
+                            <H5>DESCRIPTION</H5>
+                            <input th:field="*{description}"
+                                   id="description" type="text" class="form-control"
+                                   placeholder="DESCRIPTION">
+                            <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                                   id="descriptionError" class="text-light form-text bg-danger rounded"></small>
+                        </div>
+                        <div class="form-group">
+                            <H5>IMAGE URL</H5>
+                            <input th:field="*{imageUrl}"
+                                   id="description" type="text" class="form-control"
+                                   placeholder="IMAGE URL">
+                        </div>
+                        <div class="form-group">
+                            <H5>PRICE</H5>
+                            <input th:field="*{price}"
+                                   id="description" type="text" class="form-control"
+                                   placeholder="PRICE">
+                            <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                                   id="priceError" class="text-light form-text bg-danger rounded"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <H5>PHONE NUMBER</H5>
+                            <input th:field="*{phoneNumber}"
+                                   id="description" type="text" class="form-control"
+                                   placeholder="PHONE NUMBER">
+                            <small th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                                   id="imageError" class="text-light form-text bg-danger rounded"></small>
+                        </div>
+                        <div class="form-group">
+                            <H5>CATEGORY</H5>
+                            <select th:field="*{category}" class="form-control" id="categoryOption">
+                                <option value="" selected>SELECT CATEGORY</option>
+                                <option th:each="c:${allCategories}"
+                                        th:value="${c.getName()}"
+                                        th:text="${c.getName()}">
+                                </option>
+                            </select>
+                            <small th:if="${#fields.hasErrors('category')}" th:errors="*{category}"
+                                   id="categoryError" class="text-light form-text bg-danger rounded">
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit"
+                        id="addUsedProduct"  class="btn btn-info btn-rounded" data-toggle="tooltip" title=""
+                        data-original-title="Add to cart">Add Product
+                </button>
+            </div>
+
+            <p><a class="btn btn-success center-block btn-rounded mr-1" href="/">Go back</a></p>
+        </div>
+
+    </form>
+</div>
+</form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+
+<nav th:replace="fragments/commons::nav"></nav>
+<div>
+    <h1 class="display-4 text-white text-center">TO CONTINUE EXPLORING OUR SITE YOU HAVE TO LOG IN FIRST</h1>
+</div>
+<div id="main-wrapper">
+
+    <div class="unix-login">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-4">
+                    <div class="login-content card" style="background-color: rgba(255,255,255,0.6)">
+                        <div style="text-align: center;">
+                            <h3 class="bg-transparent">Login Account</h3>
+                        </div>
+                        <div class="login-form">
+                            <form data-toggle="validator"
+                                  th:action="@{/users/login}"
+                                  th:method="post"
+                                  id="login_form">
+                                <div class="form-group">
+                                    <strong class="bg-danger" th:if="${bad_credentials} ">Wrong username or
+                                        password!</strong>
+                                    <input
+                                            id="username"
+                                            th:value="${username}"
+                                            type="text" name="username" class="form-control" placeholder="Email"
+                                            data-error="This email is invalid"
+                                            style="background-color: rgba(255,255,255,0.6)"
+                                            required>
+                                    <div class="col-auto">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+
+                                    <input
+                                            id="password" type="password" name="password" class="form-control"
+                                            placeholder="Password" data-minlength="8"
+                                            data-error="Minimum of 8 characters"
+                                            style="background-color: rgba(255,255,255,0.6)"
+                                            required>
+                                    <div class="col-auto">
+                                    </div>
+                                </div>
+                                <button name="register" type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">
+                                    Login
+                                </button>
+                                <div class="register-link m-t-15 text-center">
+                                    <p>Don't have an account? <a href="/users/register"> Register</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="/fragments/commons::footer"></footer>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: bg.softuni.paintShop.service.ShoppingCartServiceTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.068 s - in bg.softuni.paintShop.service.ShoppingCartServiceTest

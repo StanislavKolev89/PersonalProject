@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="bg"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CategoryService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PersonalProject</a> &gt; <a href="index.source.html" class="el_package">bg.softuni.paintShop.service</a> &gt; <span class="el_source">CategoryService.java</span></div><h1>CategoryService.java</h1><pre class="source lang-java linenums">package bg.softuni.paintShop.service;
+
+import bg.softuni.paintShop.exception.ObjectNotFoundException;
+import bg.softuni.paintShop.model.dto.CategoryDTO;
+import bg.softuni.paintShop.model.entity.CategoryEntity;
+import bg.softuni.paintShop.repository.CategoryRepository;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+<span class="fc" id="L15">@RequiredArgsConstructor</span>
+@Service
+public class CategoryService {
+
+    private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper;
+
+    public List&lt;CategoryDTO&gt; getAllCategories() {
+<span class="fc" id="L23">        List&lt;CategoryDTO&gt; categoryDTOS = categoryRepository.findAll().stream().</span>
+<span class="fc" id="L24">              map(categoryEntity -&gt; modelMapper.map(categoryEntity, CategoryDTO.class)).collect(Collectors.toList());</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (categoryDTOS.isEmpty()) {</span>
+<span class="fc" id="L26">            throw new ObjectNotFoundException();</span>
+        }
+<span class="fc" id="L28">        return categoryDTOS;</span>
+    }
+
+    public CategoryDTO getCategoryDTO(Long id) {
+<span class="fc" id="L32">        return categoryRepository.findById(id)</span>
+<span class="fc" id="L33">              .map(categoryEntity -&gt; modelMapper.map(categoryEntity, CategoryDTO.class))</span>
+<span class="fc" id="L34">              .orElseThrow(ObjectNotFoundException::new);</span>
+    }
+
+    public void changeCategory(CategoryDTO categoryDto, Long productId) {
+<span class="fc" id="L38">        CategoryEntity categoryEntity = categoryRepository.findById(productId).orElseThrow(ObjectNotFoundException::new);</span>
+<span class="fc" id="L39">        categoryEntity.setName(categoryDto.getName().toUpperCase(Locale.ROOT));</span>
+<span class="fc" id="L40">        categoryEntity.setImageUrl(categoryDto.getImageUrl());</span>
+<span class="fc" id="L41">        categoryRepository.save(categoryEntity);</span>
+<span class="fc" id="L42">    }</span>
+
+    public void deleteCategory(Long id) {
+<span class="fc" id="L45">        CategoryEntity categoryEntity = categoryRepository.findById(id).orElseThrow(ObjectNotFoundException::new);</span>
+<span class="fc" id="L46">        categoryEntity.setDeleted(true);</span>
+<span class="fc" id="L47">        categoryRepository.save(categoryEntity);</span>
+<span class="fc" id="L48">    }</span>
+
+    public void addCategory(CategoryDTO categoryDTO) {
+<span class="fc" id="L51">        Optional&lt;CategoryEntity&gt; category = categoryRepository.findByName(categoryDTO.getName());</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (!category.isEmpty()) {</span>
+<span class="fc" id="L53">            category.get().setImageUrl(categoryDTO.getImageUrl());</span>
+<span class="fc" id="L54">            category.get().setDeleted(false);</span>
+        }
+<span class="fc" id="L56">        CategoryEntity categoryEntity = modelMapper.map(categoryDTO, CategoryEntity.class);</span>
+<span class="fc" id="L57">        categoryEntity.setName(categoryDTO.getName().toUpperCase(Locale.ROOT));</span>
+<span class="fc" id="L58">        categoryEntity.setDeleted(false);</span>
+<span class="fc" id="L59">        categoryRepository.save(categoryEntity);</span>
+<span class="fc" id="L60">    }</span>
+
+    @SuppressWarnings(&quot;UnusedReturnValue&quot;)
+    public boolean passedCategoryExists(String category) {
+<span class="fc" id="L64">        return categoryRepository.existsByName(category);</span>
+    }
+
+
+    public List&lt;CategoryDTO&gt; filterDeleteDCategories() {
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        return getAllCategories().stream().filter(categoryDTO -&gt; !categoryDTO.isDeleted())</span>
+<span class="fc" id="L70">              .collect(Collectors.toList());</span>
+    }
+
+    public CategoryEntity findCategoryByName(String name) {
+
+<span class="fc" id="L75">        return categoryRepository.findByName(name).orElseThrow(ObjectNotFoundException::new);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

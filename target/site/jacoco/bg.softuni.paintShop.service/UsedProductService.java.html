@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="bg"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsedProductService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PersonalProject</a> &gt; <a href="index.source.html" class="el_package">bg.softuni.paintShop.service</a> &gt; <span class="el_source">UsedProductService.java</span></div><h1>UsedProductService.java</h1><pre class="source lang-java linenums">package bg.softuni.paintShop.service;
+
+import bg.softuni.paintShop.exception.ObjectNotFoundException;
+import bg.softuni.paintShop.model.dto.UsedProductDTO;
+import bg.softuni.paintShop.model.entity.UsedProductEntity;
+import bg.softuni.paintShop.repository.UsedProductRepository;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
+import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
+
+<span class="fc" id="L16">@RequiredArgsConstructor</span>
+@Service
+public class UsedProductService {
+
+    private final UsedProductRepository usedProductRepository;
+    private final UserService userService;
+    private final ModelMapper modelMapper;
+    private final CategoryService categoryService;
+
+    public List&lt;UsedProductDTO&gt; getAllProducts() {
+<span class="fc" id="L26">        return usedProductRepository.findAll().stream().map(usedProductEntity -&gt; {</span>
+<span class="fc" id="L27">            UsedProductDTO usedProductDTO = modelMapper.map(usedProductEntity, UsedProductDTO.class);</span>
+<span class="fc" id="L28">            usedProductDTO.setUser(usedProductEntity.getUser().getUsername());</span>
+<span class="fc" id="L29">            usedProductDTO.setCategory(usedProductEntity.getCategory().getName());</span>
+<span class="fc" id="L30">            return usedProductDTO;</span>
+<span class="fc" id="L31">        }).collect(Collectors.toList());</span>
+    }
+
+
+    public String getSellerName(Long id) {
+<span class="fc" id="L36">        return usedProductRepository.findById(id).orElseThrow(ObjectNotFoundException::new).getUser().getUsername();</span>
+
+    }
+
+    public UsedProductDTO getProductById(Long id) {
+<span class="fc" id="L41">        UsedProductEntity usedProductEntity = usedProductRepository.findById(id).orElseThrow(ObjectNotFoundException::new);</span>
+<span class="fc" id="L42">        UsedProductDTO usedProductDTO = modelMapper.map(usedProductEntity, UsedProductDTO.class);</span>
+<span class="fc" id="L43">        usedProductDTO.setUser(usedProductEntity.getUser().getUsername());</span>
+<span class="fc" id="L44">        usedProductDTO.setCategory(usedProductEntity.getCategory().getName());</span>
+<span class="fc" id="L45">        return usedProductDTO;</span>
+
+    }
+
+    public void addNewProduct(@Valid UsedProductDTO productDTO, Principal principal) {
+<span class="fc" id="L50">        UsedProductEntity product = modelMapper.map(productDTO, UsedProductEntity.class);</span>
+<span class="fc" id="L51">        product.setUser(userService.findByName(principal.getName()));</span>
+<span class="fc" id="L52">        product.setCategory(categoryService.findCategoryByName(productDTO.getCategory()));</span>
+<span class="fc" id="L53">        usedProductRepository.save(product);</span>
+<span class="fc" id="L54">    }</span>
+
+    public void editProducts(UsedProductDTO usedProductDTO, Long id) {
+<span class="fc" id="L57">        UsedProductEntity usedProductEntity = usedProductRepository.findById(id).orElseThrow(ObjectNotFoundException::new);</span>
+<span class="fc" id="L58">        usedProductEntity.setCategory(categoryService.findCategoryByName(usedProductDTO.getCategory()));</span>
+<span class="fc" id="L59">        usedProductEntity.setPrice(usedProductDTO.getPrice());</span>
+<span class="fc" id="L60">        usedProductEntity.setTitle(usedProductDTO.getTitle());</span>
+<span class="fc" id="L61">        usedProductEntity.setDescription(usedProductDTO.getDescription());</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (usedProductDTO.getImageUrl() != null) {</span>
+<span class="fc" id="L63">            usedProductEntity.setImageUrl(usedProductDTO.getImageUrl());</span>
+        }
+<span class="fc" id="L65">        usedProductEntity.setPhoneNumber(usedProductDTO.getPhoneNumber());</span>
+<span class="fc" id="L66">    }</span>
+
+    public void deleteProduct(Long id) {
+<span class="fc" id="L69">        usedProductRepository.deleteById(id);</span>
+<span class="fc" id="L70">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

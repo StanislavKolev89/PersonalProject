@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="p-5 bg-blur text-center my-main">
+    <form th:action="@{/admin/categories/edit/{id}(id=${categoryData.id})}" th:method="post"
+          th:object="${categoryDTO}">
+        <div class="card">
+            <h2 class="mt-5">CATEGORY DETAILS </h2>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-6">
+                        <div class="white-box text-center"><img th:src="${categoryData.imageUrl}"
+                                                                class="img-responsive"></div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-6">
+                        <div class="form-group">
+                            <h5>CATEGORY NAME</h5>
+                            <input th:field="*{name}"
+                                   id="name" type="text" name="name" class="form-control"
+                                   th:placeholder="${categoryData.name}">
+                            <div class="col-auto">
+                                <small  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                       id="nameError" class="text-light form-text bg-danger rounded">Length must
+                                    between 3
+                                    and 20 characters</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>IMAGE URL</h5>
+                            <input th:field="*{imageUrl}"
+                                    id="imageUrl" type="text" name="name" class="form-control"
+                                   th:placeholder="${categoryData.imageUrl}">
+                            <div class="col-auto">
+                                <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"
+                                       id="imageUrlError" class="text-light form-text bg-danger rounded">Length must
+                                    between 3
+                                    and 20 characters</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit"
+                    id="addToCart" class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title=""
+                    data-original-title="Add to cart">Confirm Changes
+            </button>
+        </div>
+
+    </form>
+</div>
+<footer th:replace="fragments/commons::footer"></footer>
+
+</body>
+</html>

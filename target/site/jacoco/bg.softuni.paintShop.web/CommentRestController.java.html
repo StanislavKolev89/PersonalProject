@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="bg"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PersonalProject</a> &gt; <a href="index.source.html" class="el_package">bg.softuni.paintShop.web</a> &gt; <span class="el_source">CommentRestController.java</span></div><h1>CommentRestController.java</h1><pre class="source lang-java linenums">package bg.softuni.paintShop.web;
+
+import bg.softuni.paintShop.exception.CommentNotFoundException;
+import bg.softuni.paintShop.model.dto.ApiErrorDTO;
+import bg.softuni.paintShop.model.dto.CommentCreationDTO;
+import bg.softuni.paintShop.model.dto.CommentDTO;
+import bg.softuni.paintShop.model.dto.ContentConsumerDto;
+import bg.softuni.paintShop.model.view.CommentViewModel;
+import bg.softuni.paintShop.service.CommentService;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
+
+<span class="fc" id="L22">@RequiredArgsConstructor</span>
+@RestController
+@RequestMapping(&quot;/api&quot;)
+public class CommentRestController {
+    private final CommentService commentService;
+    private final ModelMapper modelMapper;
+
+    @GetMapping(&quot;/{productId}/comments&quot;)
+    public List&lt;CommentViewModel&gt; getComments(@PathVariable(&quot;productId&quot;) Long productId) {
+<span class="fc" id="L31">        List&lt;CommentDTO&gt; allCommentsOfCurrentProduct = commentService.getAllCommentsOfCurrentProduct(productId);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (allCommentsOfCurrentProduct.isEmpty()) {</span>
+<span class="fc" id="L33">            throw new CommentNotFoundException(productId);</span>
+        }
+<span class="fc" id="L35">        return allCommentsOfCurrentProduct.stream()</span>
+<span class="fc" id="L36">                .map(commentDTO -&gt; modelMapper.map(commentDTO, CommentViewModel.class))</span>
+<span class="fc" id="L37">                .collect(Collectors.toList());</span>
+    }
+
+    @PostMapping(value = &quot;/{productId}/comments&quot;, consumes = &quot;application/json&quot;, produces = &quot;application/json&quot;)
+    public ResponseEntity&lt;CommentViewModel&gt; createNewComment(@PathVariable(&quot;productId&quot;) Long productId,
+                                                             @AuthenticationPrincipal UserDetails principal,
+                                                             @RequestBody ContentConsumerDto contentConsumerDto) {
+
+
+<span class="nc" id="L46">        CommentCreationDTO commentCreationDTO = new CommentCreationDTO();</span>
+<span class="nc" id="L47">        commentCreationDTO.setUsername(principal.getUsername());</span>
+<span class="nc" id="L48">        commentCreationDTO.setContent(contentConsumerDto.getContent());</span>
+<span class="nc" id="L49">        commentCreationDTO.setProductId(productId);</span>
+
+<span class="nc" id="L51">        CommentViewModel comment = modelMapper.map(commentService.createComment(commentCreationDTO), CommentViewModel.class);</span>
+
+<span class="nc" id="L53">        return ResponseEntity.created(URI.create(String.format(&quot;/api/%d/comments/%d&quot;, productId, comment.getId())))</span>
+<span class="nc" id="L54">                .body(comment);</span>
+
+    }
+
+    @ExceptionHandler({CommentNotFoundException.class})
+    public ResponseEntity&lt;ApiErrorDTO&gt; handleProductNotFound(CommentNotFoundException cmne) {
+<span class="fc" id="L60">        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiErrorDTO(cmne.getId(), &quot;No comments found for this product!&quot;));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

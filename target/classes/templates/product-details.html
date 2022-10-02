@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<script src="/js/comments.js" defer></script>
+<script src="/js/itemChecker.js" defer></script>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+
+<div class="p-5 bg-blur text-center my-main">
+    <input type="hidden" name="productId" id="productId" th:value="${productViewModel.id}">
+    <form th:action="@{/products/addToCart/{id}(id=${productViewModel.id})}" th:method="post"
+          th:object="${quantityHolderDTO}">
+        <div class="card">
+            <div class="card-body">
+                <h3 th:text="${productViewModel.title}" class="card-title">Rounded Chair</h3>
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-6">
+                        <div class="white-box text-center"><img th:src="${productViewModel.imageUrl}"
+                                                                class="img-fluid"></div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-6">
+                        <h4 class="box-title mt-5">Product description</h4>
+                        <p th:text="|${productViewModel.description}|"></p>
+                        <h2 th:text="|$ ${productViewModel.price}|" class="mt-5">
+                            <small class="text-success">(36%off)</small>
+                        </h2>
+
+                        <div th:if="${active}" class="number-input">
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown();return false"
+                                    class="minus"></button>
+                            <input th:field="*{quantity}" id="quantity" min="1" name="quantity"
+                                   value="1" type="number">
+
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp();return false"
+                                    class="plus"></button>
+                        </div>
+                        <input hidden id="quantityLeft" class="quantity" min="1" name="quantity"
+                               th:value="${itemsLeft}" type="number" disabled="disabled">
+
+                        <h3 id="warningMessage" style="display: none; color: red"> We only have
+                            <th:block th:text="${itemsLeft}"></th:block>
+                            left!
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${active}">
+                <button type="submit"
+                        id="addToCart" class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title=""
+                        data-original-title="Add to cart">AddToCart
+                    <i class="fa fa-shopping-cart"></i>
+                </button>
+            </div>
+            <div th:if="${!active}" class="text-danger">
+                You are not allowed to buy this product!Please contact us for more information!
+                <a href="/contacts" class="text-dark">Contact Us</a>
+            </div>
+
+        </div>
+
+    </form>
+
+
+    </br>
+
+    <div class="container bg-light">
+        </section>
+        <section id="map"></section>
+
+        <section class="comments">
+
+            <h1>Comments</h1>
+            <div>
+                <!-- Comments submission -->
+                <form id="commentForm" method="POST"
+                      action="/">
+                    <div class="form-group">
+                        <h4>Leave a comment</h4>
+                        <label for="content">Message</label>
+
+                        <textarea name="content"
+                                  id="content"
+                                  cols="30"
+                                  rows="5"
+                                  class="form-control"
+                                  style="background-color: white;"></textarea>
+                        <small id="messageError" class="invalid-feedback">
+                            Message should be at least 10 characters.
+                        </small>
+                    </div>
+
+                    <div class="form-group btn btn-dark btn-rounded mr-1">
+                        <input type="submit"
+                               class="btn text-white"
+                               id="postComment"
+                               value="Post Comment"/>
+                    </div>
+                </form>
+                <!-- Comments submission -->
+            </div>
+
+            <!-- All comments section -->
+            <div>
+            <span id="commentBucket">
+
+            </span>
+            </div>
+
+        </section>
+    </div>
+</div>
+
+</body>
+</html>

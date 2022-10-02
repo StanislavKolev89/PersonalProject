@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: bg.softuni.paintShop.PersonalProjectApplicationTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.016 s - in bg.softuni.paintShop.PersonalProjectApplicationTest

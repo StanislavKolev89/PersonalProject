@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="p-5 bg-blur text-center my-main" style="overflow: auto">
+
+    <table id="AdminCategories" class="table table-responsive table-hover text-dark rounded"
+           style="overflow-x:scroll; background-color: rgba(255,255,255,0.5)">
+        <thead>
+
+        <h1 class="display-4 text-white">ALL PRODUCTS
+            <th:block th:text="|( ${count} )|"></th:block>
+        </h1>
+        <tr scope="row" class="bg-transparent">
+            <th scope="col">Product</th>
+            <th scope="col"></th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category</th>
+            <th scope="col"><a class="card-link text-white bg-success" href="/admin">Back to Admin panel</a></th>
+        </tr>
+        </thead>
+
+        <tbody class="table" style="background-color: rgba(255,255,255,0.5)">
+        <tr scope="row" th:each="product: ${products}">
+            <td th:text="${product.title}"></td>
+            <td>
+                <a class="photo "
+                   target="_blank">
+                    <img th:src="${product.imageUrl}" alt="" style="width:60px ; height: 60px;">
+                </a>
+            </td>
+            <td th:text="${product.description}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.category}"></td>
+            <td>
+                <a th:href="@{/admin/products/edit/{id}(id=${product.id})}" class="text-primary rounded">Edit
+                    Product</a>
+            </td>
+            <td>
+                <a th:href="@{/admin/products/delete/{id}(id=${product.id})}" class="text-danger rounded">Delete
+                    Product</a>
+            </td>
+        </tr>
+        </tbody>
+        <tr>
+            <th scope="col"><a lass="card-link text-white bg-success rounded"
+                               href="/admin/products/add">Add New Product</a></th>
+        </tr>
+    </table>
+</div>
+
+<div class="container" id="content"></div>
+<footer th:replace="fragments/commons::footer"></footer>
+
+
+</body>
+
+</html>

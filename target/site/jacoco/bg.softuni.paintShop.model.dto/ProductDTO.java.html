@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="bg"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PersonalProject</a> &gt; <a href="index.source.html" class="el_package">bg.softuni.paintShop.model.dto</a> &gt; <span class="el_source">ProductDTO.java</span></div><h1>ProductDTO.java</h1><pre class="source lang-java linenums">package bg.softuni.paintShop.model.dto;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+import java.math.BigDecimal;
+
+<span class="pc bnc" id="L15" title="All 54 branches missed.">@Data</span>
+<span class="fc" id="L16">@NoArgsConstructor</span>
+<span class="nc" id="L17">@AllArgsConstructor</span>
+<span class="nc" id="L18">@Builder</span>
+public class ProductDTO {
+
+<span class="fc" id="L21">    private Long id;</span>
+
+    @NotBlank(message = &quot;Must enter Title for this product&quot;)
+    @Size(min = 5, message = &quot;Title is too short!&quot;)
+<span class="fc" id="L25">    private String title;</span>
+
+    @NotBlank(message = &quot;Must enter some description&quot;)
+    @Size(min = 15, message = &quot;Description is too short!&quot;)
+<span class="fc" id="L29">    private String description;</span>
+
+    @NotNull(message = &quot;Enter valid price&quot;)
+    @Positive(message = &quot;Value must be positive number!&quot;)
+<span class="fc" id="L33">    private BigDecimal price;</span>
+
+    @NotBlank(message = &quot;It's not possible to create product without image url&quot;)
+<span class="fc" id="L36">    private String imageUrl;</span>
+
+    @NotNull(message = &quot;Must choose category!&quot;)
+<span class="fc" id="L39">    private String category;</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

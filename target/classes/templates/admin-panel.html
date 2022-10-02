@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+<h3 class="text-center bg-danger rounded">ADMIN PANEL</h3>
+
+<div class="container-fluid" style="overflow: auto">
+
+    <table class="table text-dark rounded">
+        <tbody>
+        <tr scope="row" class="hidden-table">
+            <td><a id="AllUsers" class="link-light" href="/admin/users/all">ALL USERS</a></td>
+            <td><a id="AllOrders" class="link-light" href="/admin/orders/all">ALL ORDERS</a></td>
+            <td><a id="AllProducts" class="link-light" href="/admin/products/all">ALL PRODUCTS</a></td>
+            <td><a id="AllCategories" class="link-light" href="/admin/categories/all">ALL CATEGORIES</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

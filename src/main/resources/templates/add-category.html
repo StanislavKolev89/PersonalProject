@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="p-5 bg-blur text-center my-main">
+    <form th:action="@{/admin/categories/add}" th:method="post"
+          th:object="${categoryDTO}">
+        <div class="card">
+            <h2 class="mt-5">ADD CATEGORY</h2>
+            <div class="card-body">
+                <div class="col-lg-offset-4">
+                    <div class="form-group">
+                        <H5>CATEGORY NAME</H5>
+                        <input th:field="*{name}"
+                               id="name" type="text" name="name" class="form-control text-center"
+                               placeholder="Category Name">
+                        <div class="col-auto">
+                            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                   id="nameError" class="text-light form-text bg-danger rounded"></small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <H5>IMAGE URL</H5>
+                        <input th:field="*{imageUrl}"
+                               id="imageUrl" type="text" name="name" class="form-control text-center"
+                               placeholder="Image Url">
+                        <div class="col-auto">
+                            <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"
+                                   id="imageUrlError" class="text-light form-text bg-danger rounded"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit"
+                    id="addToCart" class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title=""
+                    data-original-title="Add to cart">Add Category
+            </button>
+        </div>
+    </form>
+</div>
+<footer th:replace="fragments/commons::footer"></footer>
+
+</body>
+</html>

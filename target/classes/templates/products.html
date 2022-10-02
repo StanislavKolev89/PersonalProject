@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<script src="/js/catScript.js" defer></script>
+<body>
+
+<nav th:replace="fragments/commons::nav"></nav>
+
+
+<div class="p-5 bg-blur text-center my-main">
+    <div class="row">
+        <h1 class="display-4 text-white">ALL PRODUCTS</h1>
+        <h2 class="text-success">SELECT CATEGORY</h2>
+        <select class="form-control" id="categoryOption">
+            <option value="noCategory" selected>SHOW ALL</option>
+            <option th:each="c:${allCategories}"
+                    th:value="${c.getName()}"
+                    th:text="${c.getName()}">
+            </option>
+        </select>
+    </div>
+
+    <div class="row">
+        <div th:each="product :${products}" class="col-md-4">
+                <div class="filter" th:id="${product.category}">
+                    <div class="card-body" style="width: 19rem;">
+                        <img th:src="${product.imageUrl}" class="w-80 img-fluid" style="border: none;" alt="...">
+                        <div class="card-body" style="background-color: rgba(255,255,255,0.6)">
+                            <h5 th:text="${product.title}" class="card-title"></h5>
+                            <p th:text="${product.description}" class="card-text">Here is some example text to make up
+                                the
+                                card's content. Replace it with your own text anytime.</p>
+                        </div>
+                        <div class="card-body bg-white">
+                            <a th:href="@{/products/all/{id}(id=${product.id})}" class="card-link text-white">Product
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/commons::footer"></footer>
+
+</body>
+</html>

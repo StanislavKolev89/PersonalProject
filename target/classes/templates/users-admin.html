@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="p-5 bg-blur text-center my-main" style="overflow: auto;">
+
+    <table id="AdminCategories" class="table table-responsive table-hover text-dark rounded"
+           style="overflow-x:scroll; background-color: rgba(255,255,255,0.5)">
+        <thead>
+        <h1 class="display-4 text-white">ALL USERS
+            <th:block th:text="|( ${count} )|"></th:block>
+        </h1>
+        <tr scope="row" class="bg-transparent">
+            <th scope="col">Username</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">STATUS</th>
+            <th scope="col">Purchase Amount</th>
+            <th scope="col"><a class="card-link text-white bg-success" href="/admin">Back to Admin panel</a></th>
+        </tr>
+        </thead>
+
+        <tbody class="table">
+        <tr scope="row" th:each="user: ${users}" style=" background-color: rgba(255,255,255,0.5)">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.address}"></td>
+            <td th:if="${user.id}!=1" th:text="${user.active}==false? DEACTIVATED : ACTIVE"></td>
+            <td th:if="${user.id}==1">------</td>
+            <td th:text="|$ ${userService.userPurchaseTotal(user)}|"></td>
+            <td th:if="${user.id}==1" class="text-success"> ADMIN</td>
+            <td th:if="${user.id}!=1 and ${user.roleEntity.id}!=1" class="text-danger"> USER</td>
+            <td th:if="${user.id}!=1 and ${user.roleEntity.id}==1" class="text-info"> USER-ADMIN</td>
+            <td th:if="${user.id}==1" class="text-info rounded"></td>
+            <td th:if="${user.id}==1" class="text-info rounded"></td>
+            <td th:if="${user.id}==1" class="text-info"></td>
+            <td th:if="${user.active==true} and ${user.id!=1} and ${user.roleEntity.id}!=1">
+                <a th:href="@{/admin/users/deactivate/{id}(id=${user.id})}" class="text-danger rounded">Deactivate User
+                    Rights</a>
+            </td>
+            <td th:if="${user.active==true} and ${user.id!=1} and ${user.roleEntity.id}!=1">
+                <a th:href="@{/admin/users/makeAdmin/{id}(id=${user.id})}" class="text-success rounded">Give Admin
+                    Rights</a>
+            </td>
+            <td th:if="${user.active==true} and ${user.id!=1} and ${user.roleEntity.id}==1 and ${loggedUserId}!=${user.id}">
+                <a th:href="@{/admin/users/removeAdmin/{id}(id=${user.id})}" class="text-success rounded">Remove Admin
+                    Rights</a>
+            </td>
+            <td th:if="${user.active==false} and ${user.id!=1} and ${user.roleEntity.id}!=1">
+                <a th:href="@{/admin/users/activate/{id}(id=${user.id})}" class="text-success rounded">Activate User
+                    Rights</a>
+            </td>
+            <td th:if="${user.id!=1} and ${loggedUserId}!=${user.id}">
+                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}"
+                   class="text-primary rounded"
+                   th:onclick="if(!(confirm('Are you sure you want to delete this user ?') )) return false">Delete
+                    User</a>
+            </td>
+        </tr>
+        </tbody>
+
+        <tr style="background-color: rgba(255,255,255,0.5)">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Gross sales:</td>
+            <td th:text="| ${userService.grossSales} $|"></td>
+        </tr>
+    </table>
+</div>
+
+<div class="container" id="content"></div>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

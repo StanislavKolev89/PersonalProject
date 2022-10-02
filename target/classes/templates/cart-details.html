@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="p-5 bg-blur text-center my-main" style="overflow: auto" th:object="${cartItems}">
+    <div th:if="${cartItems.isEmpty()}" class="jumbotron">
+        <h1 class="display-4 text-white">You don't have any products in your cart!</h1>
+        <hr class="my-4">
+        <p class="text-white">If you want to buy something go to section Products</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="/products/all" role="button">All Products</a>
+        </p>
+    </div>
+    <table th:if="${!cartItems.isEmpty()}" class="table table-responsive  text-dark rounded"
+           style="overflow-x:scroll; background-color: rgba(255,255,255,0.5);">
+        <thead>
+
+        <h1 class="display-4 text-white">SHOPPING CART</h1>
+        <tr>
+            <th scope="col text-white">Category</th>
+            <th scope="col">Product</th>
+            <th scope="col">Description</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total</th>
+            <th scope="col"><a class="card-link text-white bg-info" href="/products/all">Back to products</a></th>
+        </tr>
+        </thead>
+
+        <tbody class="table">
+        <tr scope="row" style=" background-color: rgba(255,255,255,0.5);" th:each="item: ${cartItems}">
+            <td th:text="${item.key.category.getName()}"></td>
+            <td>
+                <a class="photo"
+                   th:href="@{/products/fromCart/{id}/{quantity}(id=${item.key.id},quantity=${item.value})}"
+                   target="_blank">
+                    <img class="rounded" th:src="${item.key.imageUrl}" alt="" style="width:60px ; height: 60px;">
+                </a>
+            </td>
+            <td th:text="${item.key.description}">Filler 2.5l
+            </td>
+            <td th:text="${item.value}">3
+            </td>
+            <td th:text="|${item.key.price} $|">22.45 $
+            </td>
+            <td th:text="|${service.pricePerProduct(item)} $|">
+            </td>
+            <td><a th:href="@{/shoppingCart/removeProduct/{id}(id=${item.key.id})}"
+                   class="text-white bg-danger rounded">Remove product from cart</a></td>
+        </tr>
+
+        </tbody>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">Estimated Total:</th>
+            <th scope="col" th:text="|${totalPrice} $|"></th>
+            <th scope="col text-white bg-success rounded">
+                <a lass="card-link" href="/shoppingCart/finishOrder">Finish Your Order</a>
+            </th>
+        </tr>
+
+    </table>
+
+</div>
+
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

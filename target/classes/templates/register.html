@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+
+</head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+
+<div id="main-wrapper">
+
+    <div class="unix-login">
+
+        <div class="container-fluid">
+
+            <div class="row justify-content-center">
+
+                <div class="col-lg-4">
+
+                    <div class="register-content card" style="background-color: rgba(255,255,255,0.6)">
+
+                        <div style="text-align: center;">
+                            <h3 class="bg-transparent">Register Account</h3>
+                        </div>
+                        <div class="login-form">
+                            <div style="text-align: center;">
+                                <strong th:if="${passwordsMatch} == false " class="bg-danger">Passwords do not
+                                    match!</strong>
+                            </div>
+
+                            <form data-toggle="validator" th:action="@{/users/register}" method="post"
+                                  th:object="${userRegisterDTO}" id="register_form">
+
+                                <div class="form-group">
+
+                                    <input th:field="*{firstName}"
+                                           id="firstName" type="text" name="name" class="form-control"
+                                           placeholder="First Name" style="background-color: rgba(255,255,255,0.6)"
+                                           required>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                                               id="firstNameError" class="text-light form-text bg-danger rounded">Length
+                                            must between 3
+                                            and 20 characters</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input th:field="*{lastName}"
+                                           id="lastName" type="text" name="name" class="form-control"
+                                           placeholder="Last Name" style="background-color: rgba(255,255,255,0.6)"
+                                           required>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                               id="lastNameError" class="text-light form-text bg-danger rounded">Length
+                                            must between 3
+                                            and 20 characters</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input th:field="*{username}"
+                                           id="username" type="text" name="name" class="form-control"
+                                           placeholder="Username" style="background-color: rgba(255,255,255,0.6)"
+                                           required>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                                               id="usernameError" class="text-light form-text bg-danger rounded">Length
+                                            must between 3
+                                            and 20 characters</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input th:field="*{email}"
+                                           id="email" type="text" name="name" class="form-control" placeholder="Email"
+                                           style="background-color: rgba(255,255,255,0.6)"
+                                           required>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                               id="emailError" class="text-light form-text bg-danger rounded">Length
+                                            must between 3
+                                            and 20 characters</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input th:field="*{address}"
+                                           id="address" type="text" name="name" class="form-control"
+                                           placeholder="Address" style="background-color: rgba(255,255,255,0.6)"
+                                           required>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+                                               id="addressError" class="text-light form-text bg-danger rounded">Length
+                                            must between 3
+                                            and 20 characters</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input th:field="*{password}"
+                                           id="password" type="password" name="name" class="form-control"
+                                           placeholder="Password" style="background-color: rgba(255,255,255,0.6)">
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                               id="passwordError" class="text-light form-text bg-danger rounded">Length
+                                            must between 3
+                                            and 20 characters</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <input th:field="*{confirmPassword}"
+                                           id="confirmPassword" type="password" name="name" class="form-control"
+                                           placeholder="Confirm password" style="background-color: rgba(255,255,255,0.6)"
+                                           required>
+                                    <div class="col-auto">
+                                        <small th:if="${#fields.hasErrors('confirmPassword')}"
+                                               th:errors="*{confirmPassword}"
+                                               id="confirmPasswordError" class="text-light form-text bg-danger rounded">Length
+                                            must between 3
+                                            and 20 characters</small>
+                                    </div>
+                                </div>
+
+
+                                <button name="register" type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">
+                                    Register
+                                </button>
+
+                                <div class="register-link m-t-15 text-center">
+
+                                    <p>Already have account? <a href="/users/login"> Sign in</a></p>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/commons::footer"></footer>
+
+</body>
+</html>
