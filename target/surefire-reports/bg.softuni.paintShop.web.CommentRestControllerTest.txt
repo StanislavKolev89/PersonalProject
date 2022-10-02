@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: bg.softuni.paintShop.web.CommentRestControllerTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.14 s - in bg.softuni.paintShop.web.CommentRestControllerTest
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.924 s <<< FAILURE! - in bg.softuni.paintShop.web.CommentRestControllerTest
+getCommentsThrowsCommentNotFoundException  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, jdbc:hsqldb:mem:69d58f0b-2c95-4fd8-8e6f-f2c25241000c
+Caused by: javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, jdbc:hsqldb:mem:69d58f0b-2c95-4fd8-8e6f-f2c25241000c
+Caused by: java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, jdbc:hsqldb:mem:69d58f0b-2c95-4fd8-8e6f-f2c25241000c
+
+getComments  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, jdbc:hsqldb:mem:f08bca6b-ab5e-4698-9c9e-15bda93cf3c3
+Caused by: javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, jdbc:hsqldb:mem:f08bca6b-ab5e-4698-9c9e-15bda93cf3c3
+Caused by: java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, jdbc:hsqldb:mem:f08bca6b-ab5e-4698-9c9e-15bda93cf3c3
+
