@@ -122,7 +122,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>heroku.App</mainClass>
+                            <mainClass>bg.PersonalProjectApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
