@@ -1,4 +1,3 @@
-Use personal_data_base;
 
 INSERT INTO roles(id, name)
 VALUES (1, 'ADMIN'),
