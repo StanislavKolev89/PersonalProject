@@ -1,4 +1,4 @@
-
+USE ${JDBC_DATABASE_URL:};
 
 INSERT INTO roles(id, name)
 VALUES (1, 'ADMIN'),
