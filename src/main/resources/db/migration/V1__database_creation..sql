@@ -26,7 +26,7 @@ create table products
         text       not null,
     price       decimal(19, 2) not null,
     title       varchar(255)   not null,
-    category_id SERIAL         null,
+    category_id SERIAL       not null,
     constraint FKog2rp4qthbtt2lfyhfo32lsw9
         foreign key (category_id) references categories (id)
 );
@@ -53,7 +53,7 @@ create table users
     last_name  varchar(255) not null,
     password   varchar(255) not null,
     username   varchar(255) not null,
-    role_id    SERIAL       null,
+    role_id    SERIAL      not null,
     constraint UK_6dotkott2kjsp8vw4d0m25fb7
         unique (email),
     constraint UK_r43af9ap4edm43mmtq01oddj6
@@ -74,8 +74,8 @@ create table used_products
     phone_number varchar(255)   not null,
     price        decimal(19, 2) not null,
     title        varchar(255)   not null,
-    category_id  SERIAL         null,
-    user_id      SERIAL         null,
+    category_id  SERIAL         not null,
+    user_id      SERIAL        not null,
     constraint FK6dudjpfumrokdha1x1fni9eor
         foreign key (category_id) references categories (id),
     constraint FKp0i6ypn5mpd5du3tbibrumvrj
@@ -89,7 +89,7 @@ create table orders
         primary key,
     created_at datetime(6) not null,
     deleted    bit         not null,
-    user_id    SERIAL      null,
+    user_id    SERIAL      not null,
     constraint FK32ql8ubntj5uh44ph9659tiih
         foreign key (user_id) references users (id)
 );
@@ -100,8 +100,8 @@ create table ordered_products
     id         SERIAL
         primary key,
     quantity   int    not null,
-    order_id   SERIAL null,
-    product_id SERIAL null,
+    order_id   SERIAL not null,
+    product_id SERIAL not null,
     constraint FKi7isf670mbq331v0muqqry1cd
         foreign key (order_id) references orders (id),
     constraint FKn042ir6sf41qikoy2c07gt87i
@@ -115,8 +115,8 @@ create table comments
         primary key,
     content    text        not null,
     created_at datetime(6) not null,
-    author_id  SERIAL      null,
-    product_id SERIAL      null,
+    author_id  SERIAL      not null,
+    product_id SERIAL     not null,
     constraint FK6uv0qku8gsu6x1r2jkrtqwjtn
         foreign key (product_id) references products (id),
     constraint FKn2na60ukhs76ibtpt9burkm27
