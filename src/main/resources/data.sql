@@ -3,13 +3,13 @@
 INSERT INTO roles(id, name)
 VALUES (1, 'ADMIN'),
        (2, 'USER');
-
-INSERT INTO categories(id, image_url, name, deleted)
-VALUES (1, '/images/CategoryTools.jpg', 'TOOLS', false),
-       (2, '/images/CategoryClearcoat.jpg', 'CLEAR', false),
-       (3, '/images/CategoryMasking.jpg', 'MASKING', false),
-       (4, '/images/CategoryBasecoat.jpg', 'BASECOAT', false),
-       (5, '/images/CategoryProtection.jpg', 'PROTECTION', false);
+#
+# INSERT INTO categories(id, image_url, name, deleted)
+# VALUES (1, '/images/CategoryTools.jpg', 'TOOLS', false),
+#        (2, '/images/CategoryClearcoat.jpg', 'CLEAR', false),
+#        (3, '/images/CategoryMasking.jpg', 'MASKING', false),
+#        (4, '/images/CategoryBasecoat.jpg', 'BASECOAT', false),
+#        (5, '/images/CategoryProtection.jpg', 'PROTECTION', false);
 
 
 INSERT INTO products(id, description, image_url, price, title, category_id, deleted)
