@@ -3,8 +3,7 @@ create table roles
     id   bigint auto_increment
         primary key,
     name varchar(255) not null
-)
-    engine = InnoDB;
+);
 
 create table categories
 (
@@ -13,8 +12,7 @@ create table categories
     deleted   bit          not null,
     image_url longtext     not null,
     name      varchar(255) not null
-)
-    engine = InnoDB;
+);
 
 create table products
 (
@@ -28,8 +26,7 @@ create table products
     category_id bigint         null,
     constraint FKog2rp4qthbtt2lfyhfo32lsw9
         foreign key (category_id) references categories (id)
-)
-    engine = InnoDB;
+);
 
 create table warehouse
 (
