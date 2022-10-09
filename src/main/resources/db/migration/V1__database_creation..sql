@@ -7,26 +7,26 @@ create table roles
 
 create table categories
 (
-    id        SERIAL
+    id      SERIAL
         primary key,
-    deleted   bit          not null,
+    deleted boolean      not null,
     image_url
-        text     not null,
-    name      varchar(255) not null
+            text         not null,
+    name    varchar(255) not null
 );
 
 create table products
 (
     id          SERIAL
         primary key,
-    deleted     bit            not null,
+    deleted     boolean        not null,
     description
-        text       not null,
+                text           not null,
     image_url
-        text       not null,
+                text           not null,
     price       decimal(19, 2) not null,
     title       varchar(255)   not null,
-    category_id SERIAL       not null,
+    category_id SERIAL         not null,
     constraint FKog2rp4qthbtt2lfyhfo32lsw9
         foreign key (category_id) references categories (id)
 );
@@ -46,14 +46,14 @@ create table users
 (
     id         SERIAL
         primary key,
-    active     bit          not null,
+    active     boolean      not null,
     address    varchar(255) not null,
     email      varchar(255) not null,
     first_name varchar(255) not null,
     last_name  varchar(255) not null,
     password   varchar(255) not null,
     username   varchar(255) not null,
-    role_id    SERIAL      not null,
+    role_id    SERIAL       not null,
     constraint UK_6dotkott2kjsp8vw4d0m25fb7
         unique (email),
     constraint UK_r43af9ap4edm43mmtq01oddj6
@@ -68,14 +68,14 @@ create table used_products
     id           SERIAL
         primary key,
     description
-        text       not null,
+                 text           not null,
     image_url
-        text       null,
+                 text           null,
     phone_number varchar(255)   not null,
     price        decimal(19, 2) not null,
     title        varchar(255)   not null,
     category_id  SERIAL         not null,
-    user_id      SERIAL        not null,
+    user_id      SERIAL         not null,
     constraint FK6dudjpfumrokdha1x1fni9eor
         foreign key (category_id) references categories (id),
     constraint FKp0i6ypn5mpd5du3tbibrumvrj
@@ -85,11 +85,11 @@ create table used_products
 
 create table orders
 (
-    id      SERIAL
+    id         SERIAL
         primary key,
     created_at timestamp(6) not null,
-    deleted    bit         not null,
-    user_id    SERIAL      not null,
+    deleted    boolean      not null,
+    user_id    SERIAL       not null,
     constraint FK32ql8ubntj5uh44ph9659tiih
         foreign key (user_id) references users (id)
 );
@@ -113,10 +113,10 @@ create table comments
 (
     id         SERIAL
         primary key,
-    content    text        not null,
+    content    text         not null,
     created_at timestamp(6) not null,
-    author_id  SERIAL      not null,
-    product_id SERIAL     not null,
+    author_id  SERIAL       not null,
+    product_id SERIAL       not null,
     constraint FK6uv0qku8gsu6x1r2jkrtqwjtn
         foreign key (product_id) references products (id),
     constraint FKn2na60ukhs76ibtpt9burkm27
