@@ -124,7 +124,7 @@ create table comments
         foreign key (product_id) references products (id),
     constraint FKn2na60ukhs76ibtpt9burkm27
         foreign key (author_id) references users (id)
-)
+);
 
 
 
