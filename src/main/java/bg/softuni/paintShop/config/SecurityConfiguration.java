@@ -32,7 +32,6 @@ public class SecurityConfiguration {
 
                         authorizeRequests().
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
-
                         antMatchers("/", "/users/login","/users/register",
                         "/products/all","/used/products/forSale","/contacts").permitAll().
                         antMatchers("/admin/**").hasRole(RoleEnum.ADMIN.name()).
