@@ -10,7 +10,8 @@ create table categories
     id        SERIAL
         primary key,
     deleted   bit          not null,
-    image_url longtext     not null,
+    image_url
+        text     not null,
     name      varchar(255) not null
 );
 
@@ -19,8 +20,10 @@ create table products
     id          SERIAL
         primary key,
     deleted     bit            not null,
-    description longtext       not null,
-    image_url   longtext       not null,
+    description
+        text       not null,
+    image_url
+        text       not null,
     price       decimal(19, 2) not null,
     title       varchar(255)   not null,
     category_id SERIAL         null,
@@ -64,8 +67,10 @@ create table used_products
 (
     id           SERIAL
         primary key,
-    description  longtext       not null,
-    image_url    longtext       null,
+    description
+        text       not null,
+    image_url
+        text       null,
     phone_number varchar(255)   not null,
     price        decimal(19, 2) not null,
     title        varchar(255)   not null,
