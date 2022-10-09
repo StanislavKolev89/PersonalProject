@@ -36,7 +36,7 @@ create table warehouse
     id         SERIAL
         primary key,
     quantity   int    not null,
-    product_id SERIAL null,
+    product_id SERIAL not null,
     constraint FKow13o6v2o8btmca0nw5pblpss
         foreign key (product_id) references products (id)
 );
