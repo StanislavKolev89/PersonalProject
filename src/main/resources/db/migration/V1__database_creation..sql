@@ -87,7 +87,7 @@ create table orders
 (
     id      SERIAL
         primary key,
-    created_at datetime(6) not null,
+    created_at timestamp(6) not null,
     deleted    bit         not null,
     user_id    SERIAL      not null,
     constraint FK32ql8ubntj5uh44ph9659tiih
@@ -114,7 +114,7 @@ create table comments
     id         SERIAL
         primary key,
     content    text        not null,
-    created_at datetime(6) not null,
+    created_at timestamp(6) not null,
     author_id  SERIAL      not null,
     product_id SERIAL     not null,
     constraint FK6uv0qku8gsu6x1r2jkrtqwjtn
