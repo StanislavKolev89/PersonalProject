@@ -13,6 +13,8 @@ public class AppDbInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        roleService.initRoles();
+
+//          roleService.initRoles();
+
     }
 }
